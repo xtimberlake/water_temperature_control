@@ -97,7 +97,7 @@ float pid_calc(pid_t* pid, float get, float set){
     {
         pid->pout = pid->p * pid->err[NOW];
 				
-				if(fabs(pid->err[NOW])<0.5)
+				if(fabs(pid->err[NOW])<0.5) //积分方向清零
 				{
 						if(0<pid->err[NOW]&&pid->err[NOW]<0.5)
 						{
@@ -115,7 +115,7 @@ float pid_calc(pid_t* pid, float get, float set){
 				else
         pid->iout += pid->i * pid->err[NOW];
 			
-				if(fabs(pid->err[NOW])>5) pid->iout=0;
+				if(fabs(pid->err[NOW])>5) pid->iout=0; //积分分离
 			  
         pid->dout = pid->d * (pid->err[NOW] - pid->err[LAST] );
         abs_limit(&(pid->iout), pid->IntegralLimit,0);
